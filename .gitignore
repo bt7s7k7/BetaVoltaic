@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+tsconfig.tsbuildinfo
+
+# UCPEM
+ucpem_ports
+/.vscode
+
+# Firebase
+/.firebase
+/firebase-debug.log
