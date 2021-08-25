@@ -18,3 +18,8 @@ export const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.name != "Home") next({ name: "Home" })
+    else next()
+})

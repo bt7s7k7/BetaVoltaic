@@ -10,7 +10,20 @@ export default defineConfig(() => {
     dotenv.config()
 
     return {
-        plugins: [vue(), vueJsx()],
+        plugins: [
+            {
+                name: "replace-event-decorator",
+                transform(src, id) {
+                    if (id.includes("eventDecorator")) return
+                    return {
+                        code: src
+                            .replace(/eventDecorator\(/g, "("),
+                        map: null
+                    }
+                }
+            },
+            vue(), vueJsx()
+        ],
         server: {
             port: +process.env.PORT ?? 8080
         }
