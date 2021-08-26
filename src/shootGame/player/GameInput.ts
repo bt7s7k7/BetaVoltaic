@@ -1,9 +1,11 @@
 import { Point } from "../../drawer/Point"
 import { Game } from "../Game"
+import { Camera } from "../rendering/Camera"
 
 export class GameInput {
     public move = Point.zero
     public mousePos = Point.zero
+    public mousePosWorld = Point.zero
     public fire = false
 
     public update() {
@@ -17,9 +19,17 @@ export class GameInput {
 
         this.move = new Point(mX, mY).normalize()
 
+        const camera = this.getCamera()
         const mousePos = this.game.drawerInput.mouse.pos
-        if (!isNaN(mousePos.x)) this.mousePos = mousePos
+        if (!isNaN(mousePos.x)) {
+            this.mousePos = mousePos
+            this.mousePosWorld = camera.screenToWorld(this.mousePos)
+        }
         this.fire = this.game.drawerInput.mouse.left.down
+    }
+
+    protected getCamera() {
+        return this.game.cameraEntity.getComponent(Camera)
     }
 
     constructor(

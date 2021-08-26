@@ -7,6 +7,7 @@ import { Component } from "../entitySystem/Component"
 import { EntitySystem } from "../entitySystem/EntitySystem"
 import { DISPOSE } from "../eventLib/Disposable"
 import { DynamicComponent } from "./physics/DynamicComponent"
+import { PhysicsSystem } from "./physics/PhysicsSystem"
 import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
 import { PlayerPrefab } from "./player/PlayerPrefab"
@@ -19,6 +20,7 @@ export class Game extends Component {
     public readonly cameraEntity
     public readonly playerEntity
     public readonly input = new GameInput(this)
+    public readonly physics = new PhysicsSystem(this)
 
     public [DISPOSE]() {
         this.system.unregisterComponent(this)
@@ -31,6 +33,8 @@ export class Game extends Component {
         for (const dynamic of this.system.iterateComponents(DynamicComponent)) {
             dynamic.update(deltaTime)
         }
+
+        this.physics.update(deltaTime)
 
         drawer.setNativeSize()
         drawer.setStyle(Color.black).fillRect()
