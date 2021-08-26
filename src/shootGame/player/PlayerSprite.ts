@@ -1,40 +1,12 @@
-import { Color } from "../../drawer/Color"
 import { Drawer } from "../../drawer/Drawer"
-import { Point } from "../../drawer/Point"
-import { Component } from "../../entitySystem/Component"
-import { Game } from "../Game"
-import { DrawableComponent } from "../rendering/DrawableComponent"
-import { Transform } from "../Transform"
+import { PLAYER_COLOR } from "../constants"
+import { PointerSprite } from "../enemy/PointerSprite"
 
-const PLAYER_COLOR = Color.yellow
-const PLAYER_HOLE_SIZE = 0.75
-const PLAYER_SHAPE = [
-    Point.up,
-    Point.fromAngle(PLAYER_HOLE_SIZE),
-    Point.down.mul(0.4),
-    Point.fromAngle(-PLAYER_HOLE_SIZE)
-]
+export class PlayerSprite extends PointerSprite {
+    public color = PLAYER_COLOR
 
-export class PlayerSprite extends DrawableComponent {
-    public readonly game = this.system.findComponent(Game)
-    public readonly transform = Component.ref(Transform)
-
-    public drawSprite(drawer: Drawer, deltaTime: number) {
-        const center = this.renderer.worldToScreen(this.transform.pos)
-
-        const angle = center.add(this.game.input.mousePos.mul(-1)).normalize().toAngle()
-
-        drawer
-            .save()
-            .setStyle(PLAYER_COLOR)
-            .translate(center)
-            .rotate(-angle)
-            .beginPath()
-            .shape(PLAYER_SHAPE.map(v => v.mul(this.renderer.zoom * 0.5)))
-            .fill()
-            /* .beginPath()
-            .arc(Point.zero, this.renderer.zoom * 0.5)
-            .stroke() */
-            .restore()
+    public drawSprite(drawer: Drawer) {
+        this.angle = this.transform.pos.add(this.game.input.mousePosWorld.mul(-1)).normalize().toAngle()
+        super.drawSprite(drawer)
     }
 }
