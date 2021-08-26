@@ -35,11 +35,13 @@ export class PhysicsSystem {
     public checkCircle(center: Point, radius: number, layer: Layer) {
         if (layer == Layer.None) return []
         const colliders = this.colliderLookup[layer]
-        const radiusSqr = radius * radius
         const ret = []
 
+        center = center.mul(-1)
+
         for (const collider of colliders) {
-            if (collider.transform.pos.add(center).sizeSqr() < radiusSqr) {
+            const maxDist = radius + collider.radius
+            if (collider.transform.pos.add(center).sizeSqr() < maxDist * maxDist) {
                 ret.push(collider)
             }
         }

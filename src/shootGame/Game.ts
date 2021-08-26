@@ -6,6 +6,7 @@ import { DrawerInput } from "../drawerInput/DrawerInput"
 import { Component } from "../entitySystem/Component"
 import { EntitySystem } from "../entitySystem/EntitySystem"
 import { DISPOSE } from "../eventLib/Disposable"
+import { RangerPrefab } from "./enemy/RangerPrefab"
 import { DynamicComponent } from "./physics/DynamicComponent"
 import { PhysicsSystem } from "./physics/PhysicsSystem"
 import { CameraFollower } from "./player/CameraFollower"
@@ -28,6 +29,7 @@ export class Game extends Component {
     }
 
     public update(drawer: Drawer, deltaTime: number) {
+        if (deltaTime > 0.5) deltaTime = 0.5
         this.input.update()
 
         for (const dynamic of this.system.iterateComponents(DynamicComponent)) {
@@ -64,6 +66,8 @@ export class Game extends Component {
             })
             .build()
         )
+
+        this.system.spawn(RangerPrefab(new Point(0, -5)))
 
         this.cameraEntity.getComponent(CameraFollower).target = this.playerEntity.getComponent(Transform)
 

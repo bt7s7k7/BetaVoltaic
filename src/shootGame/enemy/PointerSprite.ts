@@ -18,7 +18,7 @@ export class PointerSprite extends DrawableComponent {
     public readonly game = this.system.findComponent(Game)
     public readonly transform = Component.ref(Transform)
     public color = Color.white
-    protected angle = 0
+    public angle = 0
 
     public drawSprite(drawer: Drawer) {
         const center = this.renderer.worldToScreen(this.transform.pos)

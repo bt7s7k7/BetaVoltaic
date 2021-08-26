@@ -9,5 +9,5 @@ export const PlayerPrefab: Prefab = (builder) => builder
     .addComponent(Transform)
     .addComponent(PlayerSprite)
     .addComponent(PlayerController)
-    .addComponent(Collider, v => v().set({ layer: Layer.Player }))
+    .addComponent(Collider, { layer: Layer.Player })
     .build()
