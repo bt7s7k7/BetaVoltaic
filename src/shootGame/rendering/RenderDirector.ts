@@ -2,11 +2,11 @@ import { Color } from "../../drawer/Color"
 import { Drawer } from "../../drawer/Drawer"
 import { Point } from "../../drawer/Point"
 import { Rect } from "../../drawer/Rect"
-import { ARENA_RADIUS, ARENA_RADIUS_SQR, TILE_BASE_COLOR, TILE_SIZE } from "../constants"
 import { Health } from "../gameplay/Health"
 import { Transform } from "../Transform"
 import { Camera } from "./Camera"
 import { DrawableComponent } from "./DrawableComponent"
+import { FloorRenderer } from "./FloorRenderer"
 
 export class RenderDirector {
     public readonly pos = this.camera.entity.getComponent(Transform).pos
@@ -22,7 +22,7 @@ export class RenderDirector {
     }
 
     protected drawFloor() {
-        this.drawer.save()
+        /* this.drawer.save()
 
         this.drawer
             .beginPath()
@@ -55,7 +55,9 @@ export class RenderDirector {
                     .setFillStyle(TILE_BASE_COLOR.mul(0.5 + value * 0.5))
                     .fillRect(new Rect(screenX, screenY, screenTileSize, screenTileSize))
             }
-        this.drawer.restore()
+        this.drawer.restore() */
+
+        FloorRenderer.drawFloor(this.camera, this.drawer)
     }
 
     protected drawSprites() {

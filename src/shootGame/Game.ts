@@ -14,6 +14,7 @@ import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
 import { PlayerPrefab } from "./player/PlayerPrefab"
 import { Camera } from "./rendering/Camera"
+import { FloorRenderer } from "./rendering/FloorRenderer"
 import { PlayerCameraPrefab } from "./rendering/PlayerCameraPrefab"
 import { Transform } from "./Transform"
 
