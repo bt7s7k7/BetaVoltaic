@@ -5,7 +5,9 @@ import { DrawerInput } from "../drawerInput/DrawerInput"
 import { Component } from "../entitySystem/Component"
 import { EntitySystem } from "../entitySystem/EntitySystem"
 import { DISPOSE } from "../eventLib/Disposable"
+import { EventEmitter } from "../eventLib/EventEmitter"
 import { RangerPrefab } from "./enemy/RangerPrefab"
+import { HealthSystem } from "./gameplay/HealthSystem"
 import { DynamicComponent } from "./physics/DynamicComponent"
 import { PhysicsSystem } from "./physics/PhysicsSystem"
 import { CameraFollower } from "./player/CameraFollower"
@@ -21,6 +23,10 @@ export class Game extends Component {
     public readonly input = new GameInput(this)
     public readonly physics = new PhysicsSystem(this)
 
+    public readonly onDeath = new EventEmitter()
+
+    protected readonly healthSystem = new HealthSystem(this)
+
     public [DISPOSE]() {
         this.system.unregisterComponent(this)
         this.system.dispose()
@@ -34,6 +40,7 @@ export class Game extends Component {
             dynamic.update(deltaTime)
         }
 
+        this.healthSystem.update()
         this.physics.update(deltaTime)
 
         drawer.setNativeSize()

@@ -13,10 +13,11 @@ interface BulletOptions {
     pos: Point
     dir: Point
     color: Drawer.Style
+    damage: number
 }
 
-export const BulletPrefab = ({ targetLayer, pos, dir, color }: BulletOptions): Prefab => builder => builder
-    .addComponent(Bullet, { targetLayer })
+export const BulletPrefab = ({ targetLayer, pos, dir, color, damage }: BulletOptions): Prefab => builder => builder
+    .addComponent(Bullet, { targetLayer, damage })
     .addComponent(Collider, {
         delta: dir.mul(BULLET_SPEED),
         layer: Layer.Projectile,

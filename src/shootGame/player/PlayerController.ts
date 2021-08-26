@@ -1,5 +1,5 @@
 import { Component } from "../../entitySystem/Component"
-import { PLAYER_BULLET_TIMEOUT, PLAYER_COLOR, PLAYER_SPEED } from "../constants"
+import { PLAYER_BULLET_TIMEOUT, PLAYER_COLOR, PLAYER_DAMAGE, PLAYER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
 import { Collider } from "../physics/Collider"
@@ -24,7 +24,8 @@ export class PlayerController extends DynamicComponent {
             this.system.spawn(BulletPrefab({
                 targetLayer: Layer.Enemy,
                 pos: this.transform.pos, dir,
-                color: PLAYER_COLOR
+                color: PLAYER_COLOR,
+                damage: PLAYER_DAMAGE
             }))
 
             this.bulletTimeout.restart()
