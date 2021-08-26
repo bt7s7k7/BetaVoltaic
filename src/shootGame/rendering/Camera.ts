@@ -21,6 +21,11 @@ export class Camera extends Component {
         return point.add(this.lastCenter.mul(-1)).mul(1 / this.zoom).add(this.transform.pos)
     }
 
+    public isVisible(point: Point) {
+        const rect = this.lastSize.translate(this.worldToScreen(this.transform.pos).add(this.lastCenter.mul(-1)))
+        return rect.containsPoint(this.worldToScreen(point))
+    }
+
     public draw(drawer: Drawer, deltaTime: number) {
         this.lastSize = drawer.size
         this.lastCenter = this.lastSize.center()

@@ -1,7 +1,7 @@
 import { Color } from "../../drawer/Color"
 import { Point } from "../../drawer/Point"
 import { Component } from "../../entitySystem/Component"
-import { RANGER_BULLET_TIMEOUT, RANGER_DAMAGE, RANGER_ENGAGE_RADIUS_SQR, RANGER_SPEED } from "../constants"
+import { RANGER_BULLET_SPEED, RANGER_BULLET_TIMEOUT, RANGER_DAMAGE, RANGER_ENGAGE_RADIUS_SQR, RANGER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
 import { Collider } from "../physics/Collider"
@@ -35,12 +35,13 @@ export class RangerController extends DynamicComponent {
 
         this.collider.move(velocity)
 
-        if (this.fireTimeout.done()) {
+        if (this.fireTimeout.ready()) {
             this.system.spawn(BulletPrefab({
                 targetLayer: Layer.Player,
                 pos: this.transform.pos, dir,
                 color: Color.red,
-                damage: RANGER_DAMAGE
+                damage: RANGER_DAMAGE,
+                speed: RANGER_BULLET_SPEED
             }))
             this.fireTimeout.restart()
         }

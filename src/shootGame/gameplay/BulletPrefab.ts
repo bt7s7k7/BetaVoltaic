@@ -1,7 +1,6 @@
 import { Drawer } from "../../drawer/Drawer"
 import { Point } from "../../drawer/Point"
 import { Prefab } from "../../entitySystem/Entity"
-import { BULLET_SPEED } from "../constants"
 import { Collider } from "../physics/Collider"
 import { Layer } from "../physics/Layer"
 import { DrawableComponent } from "../rendering/DrawableComponent"
@@ -14,12 +13,13 @@ interface BulletOptions {
     dir: Point
     color: Drawer.Style
     damage: number
+    speed: number
 }
 
-export const BulletPrefab = ({ targetLayer, pos, dir, color, damage }: BulletOptions): Prefab => builder => builder
+export const BulletPrefab = ({ targetLayer, pos, dir, color, damage, speed }: BulletOptions): Prefab => builder => builder
     .addComponent(Bullet, { targetLayer, damage })
     .addComponent(Collider, {
-        delta: dir.mul(BULLET_SPEED),
+        delta: dir.mul(speed),
         layer: Layer.Projectile,
         radius: 0.1
     })

@@ -6,7 +6,7 @@ import { Component } from "../entitySystem/Component"
 import { EntitySystem } from "../entitySystem/EntitySystem"
 import { DISPOSE } from "../eventLib/Disposable"
 import { EventEmitter } from "../eventLib/EventEmitter"
-import { RangerPrefab } from "./enemy/RangerPrefab"
+import { EnemySpawner } from "./enemy/EnemySpawner"
 import { HealthSystem } from "./gameplay/HealthSystem"
 import { DynamicComponent } from "./physics/DynamicComponent"
 import { PhysicsSystem } from "./physics/PhysicsSystem"
@@ -22,10 +22,14 @@ export class Game extends Component {
     public readonly playerEntity
     public readonly input = new GameInput(this)
     public readonly physics = new PhysicsSystem(this)
+    public readonly enemySpawner = new EnemySpawner(this)
+
+    public time = 0
 
     public readonly onDeath = new EventEmitter()
 
     protected readonly healthSystem = new HealthSystem(this)
+
 
     public [DISPOSE]() {
         this.system.unregisterComponent(this)
@@ -34,6 +38,7 @@ export class Game extends Component {
 
     public update(drawer: Drawer, deltaTime: number) {
         if (deltaTime > 0.5) deltaTime = 0.5
+        this.time += deltaTime
         this.input.update()
 
         for (const dynamic of this.system.iterateComponents(DynamicComponent)) {
@@ -42,6 +47,8 @@ export class Game extends Component {
 
         this.healthSystem.update()
         this.physics.update(deltaTime)
+
+        this.enemySpawner.update(deltaTime)
 
         drawer.setNativeSize()
         drawer.setStyle(Color.black).fillRect()
@@ -57,8 +64,6 @@ export class Game extends Component {
 
         this.cameraEntity = this.system.spawn(PlayerCameraPrefab)
         this.playerEntity = this.system.spawn(PlayerPrefab)
-
-        this.system.spawn(RangerPrefab(new Point(0, -5)))
 
         this.cameraEntity.getComponent(CameraFollower).target = this.playerEntity.getComponent(Transform)
 

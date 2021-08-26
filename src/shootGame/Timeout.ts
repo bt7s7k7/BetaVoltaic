@@ -9,7 +9,7 @@ export class Timeout {
         if (this.remaining > 0) this.remaining -= deltaTime
     }
 
-    public done() {
+    public ready() {
         return this.remaining <= 0
     }
 

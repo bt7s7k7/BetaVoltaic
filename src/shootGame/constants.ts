@@ -1,6 +1,9 @@
 import { Color } from "../drawer/Color"
+import { EnemySpawnOptions } from "./enemy/EnemySpawner"
+import { RangerController } from "./enemy/RangerController"
+import { RangerPrefab } from "./enemy/RangerPrefab"
 
-export const BULLET_SPEED = 30
+export const PLAYER_BULLET_SPEED = 40
 export const PLAYER_BULLET_TIMEOUT = 0.1
 export const PLAYER_COLOR = Color.yellow
 export const PLAYER_SPEED = 10
@@ -16,3 +19,15 @@ export const RANGER_ENGAGE_RADIUS_SQR = RANGER_ENGAGE_RADIUS ** 2
 export const RANGER_SPEED = 5
 export const RANGER_HEALTH = 5
 export const RANGER_DAMAGE = 1
+export const RANGER_BULLET_SPEED = 15
+export const SPAWN_ATTEMPT_TIMEOUT = 0.5
+
+export const ENEMY_SPAWN_OPTIONS: EnemySpawnOptions[] = [
+    {
+        prefab: RangerPrefab,
+        maxCount: 5,
+        minTime: 0,
+        spawnChance: 0.1,
+        trackComponent: RangerController
+    }
+]

@@ -1,5 +1,5 @@
 import { Component } from "../../entitySystem/Component"
-import { PLAYER_BULLET_TIMEOUT, PLAYER_COLOR, PLAYER_DAMAGE, PLAYER_SPEED } from "../constants"
+import { PLAYER_BULLET_SPEED, PLAYER_BULLET_TIMEOUT, PLAYER_COLOR, PLAYER_DAMAGE, PLAYER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
 import { Collider } from "../physics/Collider"
@@ -19,13 +19,14 @@ export class PlayerController extends DynamicComponent {
         this.collider.move(this.input.move.mul(this.speed))
         this.bulletTimeout.update(deltaTime)
 
-        if (this.input.fire && this.bulletTimeout.done()) {
+        if (this.input.fire && this.bulletTimeout.ready()) {
             const dir = this.input.mousePosWorld.add(this.transform.pos.mul(-1)).normalize()
             this.system.spawn(BulletPrefab({
                 targetLayer: Layer.Enemy,
                 pos: this.transform.pos, dir,
                 color: PLAYER_COLOR,
-                damage: PLAYER_DAMAGE
+                damage: PLAYER_DAMAGE,
+                speed: PLAYER_BULLET_SPEED
             }))
 
             this.bulletTimeout.restart()
