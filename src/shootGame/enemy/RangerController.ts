@@ -1,7 +1,7 @@
 import { Color } from "../../drawer/Color"
 import { Point } from "../../drawer/Point"
 import { Component } from "../../entitySystem/Component"
-import { RANGER_BULLET_SPEED, RANGER_BULLET_TIMEOUT, RANGER_DAMAGE, RANGER_ENGAGE_RADIUS_SQR, RANGER_SPEED } from "../constants"
+import { RANGER_BULLET_SPEED, RANGER_BULLET_TIMEOUT, RANGER_DAMAGE, RANGER_ENGAGE_RADIUS_MAX_SQR, RANGER_ENGAGE_RADIUS_MIN_SQR, RANGER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
 import { Collider } from "../physics/Collider"
@@ -11,6 +11,11 @@ import { Timeout } from "../Timeout"
 import { Transform } from "../Transform"
 import { PointerSprite } from "./PointerSprite"
 
+enum RangerState {
+    Approaching,
+    Retreating
+}
+
 export class RangerController extends DynamicComponent {
     public readonly game = this.system.findComponent(Game)
     public readonly sprite = Component.ref(PointerSprite)
@@ -18,6 +23,7 @@ export class RangerController extends DynamicComponent {
     public readonly collider = Component.ref(Collider)
     public readonly fireTimeout = new Timeout(RANGER_BULLET_TIMEOUT)
     public speed = RANGER_SPEED
+    public state = RangerState.Approaching
     public chirality = Math.random() > 0.5 ? 1 : -1
 
     public update(deltaTime: number) {
@@ -28,12 +34,17 @@ export class RangerController extends DynamicComponent {
 
         this.sprite.angle = diff.mul(-1).toAngle()
 
-        const velocity = (diff.sizeSqr() > RANGER_ENGAGE_RADIUS_SQR ? dir : dir.mul(-1))
-            .add(new Point(dir.y, -dir.x).mul(this.chirality))
-            .normalize()
-            .mul(this.speed)
+        let velocity = new Point(dir.y, -dir.x).mul(this.chirality)
 
-        this.collider.move(velocity)
+        const playerDistSqr = diff.sizeSqr()
+        if (playerDistSqr > RANGER_ENGAGE_RADIUS_MAX_SQR) this.state = RangerState.Approaching
+        else if (playerDistSqr < RANGER_ENGAGE_RADIUS_MIN_SQR) this.state = RangerState.Retreating
+
+        velocity = velocity.add(
+            this.state == RangerState.Approaching ? dir : dir.mul(-1)
+        )
+
+        this.collider.move(velocity.normalize().mul(this.speed))
 
         if (this.fireTimeout.ready()) {
             this.system.spawn(BulletPrefab({
