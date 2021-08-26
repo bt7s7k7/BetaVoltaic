@@ -1,5 +1,4 @@
 import { Component } from "../../entitySystem/Component"
-import { ARENA_RADIUS_SQR } from "../constants"
 import { Collider } from "../physics/Collider"
 import { DynamicComponent } from "../physics/DynamicComponent"
 import { Layer } from "../physics/Layer"
@@ -14,8 +13,6 @@ export class Bullet extends DynamicComponent {
     protected toDelete = false
 
     public update() {
-        if (this.transform.pos.sizeSqr() > ARENA_RADIUS_SQR && this.targetLayer == Layer.Player) this.dispose()
-
         if (this.toDelete) this.entity.dispose()
         const hits = this.collider.testCollision(this.targetLayer)
 
