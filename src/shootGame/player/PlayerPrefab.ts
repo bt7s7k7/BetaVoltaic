@@ -12,5 +12,5 @@ export const PlayerPrefab: Prefab = (builder) => builder
     .addComponent(PlayerSprite)
     .addComponent(PlayerController)
     .addComponent(Collider, { layer: Layer.Player })
-    .addComponent(Health, { maxHealth: PLAYER_HEALTH })
+    .addComponent(Health, { maxHealth: PLAYER_HEALTH, isPlayer: true })
     .build()

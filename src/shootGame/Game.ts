@@ -54,7 +54,7 @@ export class Game extends Component {
             dynamic.update(deltaTime)
         }
 
-        this.healthSystem.update()
+        this.healthSystem.update(deltaTime)
         this.physics.update(deltaTime)
 
         this.enemySpawner.update(deltaTime)

@@ -9,6 +9,7 @@ export const PLAYER_COLOR = Color.yellow
 export const PLAYER_SPEED = 10
 export const PLAYER_HEALTH = 10
 export const PLAYER_DAMAGE = 1
+export const PLAYER_IFRAME_TIMEOUT = 0.1
 export const ARENA_RADIUS = 30
 export const ARENA_RADIUS_SQR = ARENA_RADIUS ** 2
 export const TILE_SIZE = 1
