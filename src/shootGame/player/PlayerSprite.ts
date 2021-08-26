@@ -18,20 +18,17 @@ const PLAYER_SHAPE = [
 export class PlayerSprite extends DrawableComponent {
     public readonly game = this.system.findComponent(Game)
     public readonly transform = Component.ref(Transform)
-    public angle = 0
 
     public drawSprite(drawer: Drawer, deltaTime: number) {
         const center = this.renderer.worldToScreen(this.transform.pos)
 
-        if (deltaTime > 0) {
-            this.angle = center.add(this.game.drawerInput.mouse.pos.mul(-1)).normalize().toAngle()
-        }
+        const angle = center.add(this.game.input.mousePos.mul(-1)).normalize().toAngle()
 
         drawer
             .save()
             .setStyle(PLAYER_COLOR)
             .translate(center)
-            .rotate(-this.angle)
+            .rotate(-angle)
             .beginPath()
             .shape(PLAYER_SHAPE.map(v => v.mul(this.renderer.zoom * 0.5)))
             .fill()

@@ -4,7 +4,7 @@ import { Component } from "../entitySystem/Component"
 export class Transform extends Component {
     public pos = Point.zero
 
-    public offset(delta: Point) {
+    public move(delta: Point) {
         this.pos = this.pos.add(delta)
     }
 }

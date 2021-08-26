@@ -11,7 +11,7 @@ export const GameView = (defineComponent({
             self.guard(game)
 
             drawerInput.onDraw.add(self, ({ deltaTime }) => {
-                game.update(drawerInput.drawer, deltaTime)
+                game.update(drawerInput.drawer, deltaTime / 1000)
             })
         })
 
