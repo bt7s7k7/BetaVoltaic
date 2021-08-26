@@ -31,7 +31,7 @@ export class RenderDirector {
 
             drawer
                 .beginPath()
-                .arc(this.worldToScreen(Point.zero), (ARENA_RADIUS - 1) * this.zoom)
+                .arc(this.worldToScreen(Point.zero), (ARENA_RADIUS) * this.zoom)
                 .clip()
 
             const screenTileSize = TILE_SIZE * this.zoom
@@ -51,7 +51,7 @@ export class RenderDirector {
                     const realX = x + bX
                     const realY = y + bY
 
-                    if (realX * realX + realY * realY > ARENA_RADIUS_SQR) continue
+                    if ((realX + TILE_SIZE / 2) * (realX + TILE_SIZE / 2) + (realY + TILE_SIZE / 2) * (realY + TILE_SIZE / 2) > ARENA_RADIUS_SQR) continue
 
                     const value = parseFloat("0." + Math.sin(realX + realY * 50).toString().substr(6))
 

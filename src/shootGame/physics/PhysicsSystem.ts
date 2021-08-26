@@ -1,4 +1,5 @@
 import { Point } from "../../drawer/Point"
+import { ARENA_RADIUS, ARENA_RADIUS_SQR } from "../constants"
 import { Game } from "../Game"
 import { Collider } from "./Collider"
 import { Layer } from "./Layer"
@@ -44,6 +45,26 @@ export class PhysicsSystem {
             if (collider.transform.pos.add(center).sizeSqr() < maxDist * maxDist) {
                 ret.push(collider)
             }
+        }
+
+        const toDelete = []
+
+        for (const projectile of this.colliderLookup.projectile) {
+            if (projectile.transform.pos.sizeSqr() > ARENA_RADIUS_SQR * 4) {
+                toDelete.push(projectile)
+            }
+        }
+
+        for (const player of this.colliderLookup.player) {
+            if (player.transform.pos.sizeSqr() > ARENA_RADIUS_SQR) {
+                const dist = player.transform.pos.size()
+                const error = ARENA_RADIUS - dist
+                player.transform.move(player.transform.pos.normalize().mul(error))
+            }
+        }
+
+        for (const collider of toDelete) {
+            collider.entity.dispose()
         }
 
         return ret

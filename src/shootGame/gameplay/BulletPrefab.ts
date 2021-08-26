@@ -19,7 +19,6 @@ export const BulletPrefab = ({ targetLayer, pos, dir, color }: BulletOptions): P
     .addComponent(Bullet, { targetLayer })
     .addComponent(Collider, {
         delta: dir.mul(BULLET_SPEED),
-        deleteOnCollision: true,
         layer: Layer.Projectile,
         radius: 0.1
     })

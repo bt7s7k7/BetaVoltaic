@@ -9,7 +9,6 @@ export class Collider extends Component {
     public radius = 1
     public layer = Layer.None
     public delta = Point.zero
-    public deleteOnCollision = false
     public readonly transform = Component.ref(Transform)
     public readonly game = this.system.findComponent(Game)
 
