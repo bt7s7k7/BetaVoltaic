@@ -14,7 +14,6 @@ import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
 import { PlayerPrefab } from "./player/PlayerPrefab"
 import { Camera } from "./rendering/Camera"
-import { FloorRenderer } from "./rendering/FloorRenderer"
 import { PlayerCameraPrefab } from "./rendering/PlayerCameraPrefab"
 import { Transform } from "./Transform"
 
@@ -26,18 +25,27 @@ export class Game extends Component {
     public readonly enemySpawner = new EnemySpawner(this)
 
     public time = 0
+    public fps = 0
+    public frameTime = 0
 
     public readonly onDeath = new EventEmitter()
 
     protected readonly healthSystem = new HealthSystem(this)
-
+    protected fpsCounter = 0
+    protected readonly fpsCounterInterval = setInterval(() => {
+        this.fps = this.fpsCounter
+        this.fpsCounter = 0
+    }, 1000)
 
     public [DISPOSE]() {
         this.system.unregisterComponent(this)
         this.system.dispose()
+
+        clearInterval(this.fpsCounterInterval)
     }
 
     public update(drawer: Drawer, deltaTime: number) {
+        const start = performance.now()
         if (deltaTime > 0.5) deltaTime = 0.5
         this.time += deltaTime
         this.input.update()
@@ -55,6 +63,13 @@ export class Game extends Component {
         drawer.setStyle(Color.black).fillRect()
 
         this.cameraEntity.getComponent(Camera).draw(drawer, deltaTime)
+        const end = performance.now()
+        this.fpsCounter++
+        this.frameTime = (end - start)
+    }
+
+    public getDebugText() {
+        return `FPS: ${this.fps} (${this.frameTime.toFixed(1)}ms)`
     }
 
     constructor(

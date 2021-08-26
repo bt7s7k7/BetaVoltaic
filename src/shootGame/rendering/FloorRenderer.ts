@@ -1,4 +1,3 @@
-import { Color } from "../../drawer/Color"
 import { Drawer } from "../../drawer/Drawer"
 import { Point } from "../../drawer/Point"
 import { Rect } from "../../drawer/Rect"
@@ -15,8 +14,6 @@ export namespace FloorRenderer {
             floorBuffer.setSize(Point.one.mul(ARENA_RADIUS * 2 * zoom))
 
             floorBuffer.save()
-
-            floorBuffer.save().setStyle(Color.white).setStrokeWidth(10).strokeRect(floorBuffer.size).restore()
 
             floorBuffer
                 .beginPath()
