@@ -2,7 +2,7 @@ import { Component } from "../../entitySystem/Component"
 import { DynamicComponent } from "../physics/DynamicComponent"
 import { Transform } from "../Transform"
 
-export class FracFollower extends DynamicComponent {
+export class CameraFollower extends DynamicComponent {
     public transform = Component.ref(Transform)
     public target!: Transform
 

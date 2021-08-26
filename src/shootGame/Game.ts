@@ -7,7 +7,7 @@ import { Component } from "../entitySystem/Component"
 import { EntitySystem } from "../entitySystem/EntitySystem"
 import { DISPOSE } from "../eventLib/Disposable"
 import { DynamicComponent } from "./physics/DynamicComponent"
-import { FracFollower } from "./player/FracFollower"
+import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
 import { PlayerPrefab } from "./player/PlayerPrefab"
 import { Camera } from "./rendering/Camera"
@@ -61,7 +61,7 @@ export class Game extends Component {
             .build()
         )
 
-        this.cameraEntity.getComponent(FracFollower).target = this.playerEntity.getComponent(Transform)
+        this.cameraEntity.getComponent(CameraFollower).target = this.playerEntity.getComponent(Transform)
 
         this.playerEntity.getComponent(Transform).move(new Point(5, 5))
     }
