@@ -14,6 +14,9 @@ export class Timeout {
     }
 
     constructor(
-        protected timeout: number
-    ) { }
+        protected timeout: number,
+        randomizeRemaining = false
+    ) {
+        if (randomizeRemaining) this.remaining = Math.random() * this.timeout
+    }
 }

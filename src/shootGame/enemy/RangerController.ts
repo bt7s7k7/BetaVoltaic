@@ -21,7 +21,7 @@ export class RangerController extends DynamicComponent {
     public readonly sprite = Component.ref(PointerSprite)
     public readonly transform = Component.ref(Transform)
     public readonly collider = Component.ref(Collider)
-    public readonly fireTimeout = new Timeout(RANGER_BULLET_TIMEOUT)
+    public readonly fireTimeout = new Timeout(RANGER_BULLET_TIMEOUT, true)
     public speed = RANGER_SPEED
     public state = RangerState.Approaching
     public chirality = Math.random() > 0.5 ? 1 : -1
