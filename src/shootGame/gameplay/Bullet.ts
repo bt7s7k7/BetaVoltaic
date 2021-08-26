@@ -8,6 +8,7 @@ import { Health } from "./Health"
 export class Bullet extends DynamicComponent {
     public targetLayer = Layer.None
     public damage = 0
+    public pierce = false
     public readonly collider = Component.ref(Collider)
     public readonly transform = Component.ref(Transform)
     protected toDelete = false
@@ -21,7 +22,7 @@ export class Bullet extends DynamicComponent {
                 const health = hit.entity.tryGetComponent(Health)
                 health?.hit(this.damage)
             }
-            this.toDelete = true
+            if (!this.pierce) this.toDelete = true
         }
     }
 }
