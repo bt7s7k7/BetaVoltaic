@@ -1,5 +1,5 @@
 import { Component } from "../../entitySystem/Component"
-import { PLAYER_BULLET_TIMEOUT } from "../constants"
+import { PLAYER_BULLET_TIMEOUT, PLAYER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
 import { Collider } from "../physics/Collider"
@@ -11,7 +11,7 @@ export class PlayerController extends DynamicComponent {
     public readonly input = this.system.findComponent(Game).input
     public readonly collider = Component.ref(Collider)
     public readonly transform = Component.ref(Transform)
-    public speed = 10
+    public speed = PLAYER_SPEED
     public bulletTimeout = 0
 
     public update(deltaTime: number) {
