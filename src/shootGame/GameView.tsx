@@ -90,10 +90,13 @@ export const GameView = eventDecorator(defineComponent({
                     </h2>
                 </div>
 
-                {state.value == "paused" && <div class="absolute-fill ignored flex center p-2 bg-black-transparent">
+                {state.value == "paused" && <div class="absolute-fill flex column center p-2 bg-black-transparent">
                     <h1 class="title monospace p-2">
                         <Aberration>Paused</Aberration>
                     </h1>
+                    <Button onClick={() => ctx.emit("exit")}>
+                        <Aberration>Main menu</Aberration>
+                    </Button>
                 </div>}
 
                 {state.value == "dead" && <div class="absolute-fill flex column center p-2 bg-black-transparent gap-4">
