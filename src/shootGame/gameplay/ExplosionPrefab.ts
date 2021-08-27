@@ -13,7 +13,7 @@ interface ExplosionOptions {
     offset?: number
 }
 
-export const ExplosionPrefab = ({ pos, radius, color = Color.yellow, maxTime = 0.2, offset = 0 }: ExplosionOptions): Prefab => builder => builder
+export const ExplosionPrefab = ({ pos, radius, color = Color.orange.lerp(Color.yellow, Math.random() / 2), maxTime = 0.2, offset = 0 }: ExplosionOptions): Prefab => builder => builder
     .addComponent(Transform, { pos })
     .addComponent(ExplosionSprite, { radius, color, maxTime, timer: -offset })
     .build()

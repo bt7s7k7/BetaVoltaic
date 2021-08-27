@@ -3,6 +3,7 @@ import { Collider } from "../physics/Collider"
 import { DynamicComponent } from "../physics/DynamicComponent"
 import { Layer } from "../physics/Layer"
 import { Transform } from "../Transform"
+import { ExplosionPrefab } from "./ExplosionPrefab"
 import { Health } from "./Health"
 
 export class Bullet extends DynamicComponent {
@@ -11,10 +12,11 @@ export class Bullet extends DynamicComponent {
     public pierce = false
     public readonly collider = Component.ref(Collider)
     public readonly transform = Component.ref(Transform)
-    protected toDelete = false
+    public toDelete = false
 
     public update() {
         if (this.toDelete) {
+            this.system.spawn(ExplosionPrefab({ pos: this.transform.pos, radius: 0.2 }))
             this.entity.dispose()
             return
         }

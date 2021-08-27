@@ -35,7 +35,6 @@ export class HealthSystem {
                         this.game.system.spawn(ExplosionPrefab({
                             pos: first ? health.transform.pos : health.transform.pos.add(new Point(Math.random() - 0.5, Math.random() - 0.5).mul(2)),
                             radius: 1.5 + Math.random() * 1,
-                            color: Color.orange.lerp(Color.yellow, Math.random() / 2),
                             offset: first ? 0 : Math.random() * 0.2
                         }))
 
