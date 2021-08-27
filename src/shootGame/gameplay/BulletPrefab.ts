@@ -3,9 +3,9 @@ import { Point } from "../../drawer/Point"
 import { Prefab } from "../../entitySystem/Entity"
 import { Collider } from "../physics/Collider"
 import { Layer } from "../physics/Layer"
-import { DrawableComponent } from "../rendering/DrawableComponent"
 import { Transform } from "../Transform"
 import { Bullet } from "./Bullet"
+import { BulletSprite } from "./BulletSprite"
 
 interface BulletOptions {
     targetLayer: Layer
@@ -24,24 +24,5 @@ export const BulletPrefab = ({ targetLayer, pos, dir, color, damage, speed }: Bu
         radius: 0.1
     })
     .addComponent(Transform, { pos })
-    .addComponent(class extends DrawableComponent {
-        public angle = dir.toAngle()
-
-        public drawSprite(drawer: Drawer) {
-            const center = this.renderer.worldToScreen(this.transform.pos)
-
-            drawer
-                .save()
-                .translate(center)
-                .rotate(-this.angle)
-                .scale(new Point(0.75, 1.25))
-
-                .setStyle(color)
-                .beginPath()
-                .arc(Point.zero, 0.1 * this.renderer.zoom)
-                .fill()
-
-                .restore()
-        }
-    })
+    .addComponent(BulletSprite, { color, angle: dir.toAngle() })
     .build()
