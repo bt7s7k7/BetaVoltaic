@@ -2,6 +2,7 @@ import { Color } from "../../drawer/Color"
 import { Point } from "../../drawer/Point"
 import { PLAYER_IFRAME_TIMEOUT } from "../constants"
 import { Game } from "../Game"
+import { Settings } from "../Settings"
 import { Timeout } from "../Timeout"
 import { ExplosionPrefab } from "./ExplosionPrefab"
 import { Health } from "./Health"
@@ -28,7 +29,7 @@ export class HealthSystem {
 
             if (health.health <= 0) {
                 if (isPlayer) {
-                    this.game.onDeath.emit()
+                    if (!Settings.value.invulnerability) this.game.onDeath.emit()
                 } else {
                     let first = true
                     do {

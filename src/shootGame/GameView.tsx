@@ -48,7 +48,7 @@ export const GameView = eventDecorator(defineComponent({
 
             function update(deltaTime: number) {
                 if (!game.paused) game.update(drawerInput.drawer, deltaTime / 1000)
-                debugText.value = game.getDebugText()
+                if (Settings.value.fpsMeter) debugText.value = game.getDebugText()
                 time.value = game.time
 
                 state.value = !game.paused ? "normal"

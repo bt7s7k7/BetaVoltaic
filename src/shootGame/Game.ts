@@ -19,6 +19,7 @@ import { BloomEffect } from "./rendering/BloomEffect"
 import { Camera } from "./rendering/Camera"
 import { PlayerCameraPrefab } from "./rendering/PlayerCameraPrefab"
 import { PostProcess } from "./rendering/PostProcess"
+import { Settings } from "./Settings"
 import { Transform } from "./Transform"
 
 export class Game extends Component {
@@ -36,10 +37,10 @@ export class Game extends Component {
     public dead = false
 
     public readonly onDeath = new EventEmitter()
-    public readonly postProcesses: PostProcess[] = [
-        new BloomEffect(),
-        new AberrationEffect()
-    ]
+    public readonly postProcesses = [
+        Settings.value.bloom && new BloomEffect(),
+        Settings.value.aberration && new AberrationEffect()
+    ].filter(v => v) as PostProcess[]
 
     protected readonly healthSystem = new HealthSystem(this)
     protected fpsCounter = 0
@@ -57,6 +58,7 @@ export class Game extends Component {
 
     public update(drawer: Drawer, deltaTime: number) {
         if (this.paused) deltaTime = 0
+        if (Settings.value.slowMotion) deltaTime /= 2
 
         const start = performance.now()
         if (deltaTime > 0.5) deltaTime = 0.5
