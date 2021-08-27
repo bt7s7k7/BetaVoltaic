@@ -6,9 +6,12 @@ export class Health extends Component {
     public maxHealth = 0
     public damage = 0
     public isPlayer = false
+    public invulnerable = false
     public readonly transform = Component.ref(Transform)
 
     public hit(damage: number) {
+        if (this.invulnerable) return
+
         if (this.isPlayer) {
             this.damage += damage
         } else {

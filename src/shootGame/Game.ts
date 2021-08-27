@@ -12,6 +12,7 @@ import { DynamicComponent } from "./physics/DynamicComponent"
 import { PhysicsSystem } from "./physics/PhysicsSystem"
 import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
+import { PlayerController } from "./player/PlayerController"
 import { PlayerPrefab } from "./player/PlayerPrefab"
 import { AberrationEffect } from "./rendering/AbberationEffect"
 import { BloomEffect } from "./rendering/BloomEffect"
@@ -23,6 +24,7 @@ import { Transform } from "./Transform"
 export class Game extends Component {
     public readonly cameraEntity
     public readonly playerEntity
+    public readonly player: PlayerController
     public readonly input = new GameInput(this)
     public readonly physics = new PhysicsSystem(this)
     public readonly enemySpawner = new EnemySpawner(this)
@@ -87,6 +89,8 @@ export class Game extends Component {
 
         this.cameraEntity = this.system.spawn(PlayerCameraPrefab)
         this.playerEntity = this.system.spawn(PlayerPrefab)
+
+        this.player = this.playerEntity.getComponent(PlayerController)
 
         this.cameraEntity.getComponent(CameraFollower).target = this.playerEntity.getComponent(Transform)
 

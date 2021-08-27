@@ -2,6 +2,7 @@ import { Component } from "../../entitySystem/Component"
 import { PLAYER_BULLET_SPEED, PLAYER_BULLET_TIMEOUT, PLAYER_COLOR, PLAYER_DAMAGE, PLAYER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
+import { Effect, EffectType } from "../gameplay/Effect"
 import { PickupComponent } from "../gameplay/PickupComponent"
 import { Collider } from "../physics/Collider"
 import { DynamicComponent } from "../physics/DynamicComponent"
@@ -15,6 +16,7 @@ export class PlayerController extends DynamicComponent {
     public readonly transform = Component.ref(Transform)
     public speed = PLAYER_SPEED
     public bulletTimeout = new Timeout(PLAYER_BULLET_TIMEOUT)
+    public effects = new Map<EffectType, Effect>()
 
     public update(deltaTime: number) {
         this.collider.move(this.input.move.mul(this.speed))
@@ -37,5 +39,23 @@ export class PlayerController extends DynamicComponent {
             pickup.entity.getComponent(PickupComponent).pickup(this)
             pickup.entity.dispose()
         }
+
+        for (const [type, effect] of this.effects) {
+            effect.time -= deltaTime
+            if (effect.time <= 0) {
+                type.onEnd?.(this)
+                this.effects.delete(type)
+            }
+        }
+    }
+
+    public addEffect(type: EffectType) {
+        if (this.effects.has(type)) {
+            type.onEnd?.(this)
+            this.effects.delete(type)
+        }
+
+        type.onStart?.(this)
+        this.effects.set(type, new Effect(type))
     }
 }
