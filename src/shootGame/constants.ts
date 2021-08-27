@@ -2,6 +2,8 @@ import { Color } from "../drawer/Color"
 import { ChargerController } from "./enemy/ChargerController"
 import { ChargerPrefab } from "./enemy/ChargerPrefab"
 import { EnemySpawnOptions } from "./enemy/EnemySpawner"
+import { EnforcerController } from "./enemy/EnforcerController"
+import { EnforcerPrefab } from "./enemy/EnforcerPrefab"
 import { RangerController } from "./enemy/RangerController"
 import { RangerPrefab } from "./enemy/RangerPrefab"
 
@@ -31,6 +33,10 @@ export const CHARGER_DAMAGE = 1
 export const CHARGER_CHARGE_TIME = 0.5
 export const CHARGER_TRAVEL_TIME = 0.5
 export const CHARGER_TRAVEL_SPEED = 20
+export const ENFORCER_HEALTH = 1
+export const ENFORCER_BULLET_TIMEOUT = 0.4
+export const ENFORCER_BULLET_SPEED = 10
+export const ENFORCER_DAMAGE = 0.5
 
 export const ENEMY_SPAWN_OPTIONS: EnemySpawnOptions[] = [
     {
@@ -46,5 +52,12 @@ export const ENEMY_SPAWN_OPTIONS: EnemySpawnOptions[] = [
         minTime: 0,
         spawnChance: 0.2,
         trackComponent: ChargerController
+    },
+    {
+        prefab: EnforcerPrefab,
+        maxCount: 1,
+        minTime: 10,
+        spawnChance: 0.5,
+        trackComponent: EnforcerController
     }
 ]
