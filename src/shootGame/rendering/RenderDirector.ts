@@ -2,6 +2,7 @@ import { Color } from "../../drawer/Color"
 import { Drawer } from "../../drawer/Drawer"
 import { Point } from "../../drawer/Point"
 import { Rect } from "../../drawer/Rect"
+import { Game } from "../Game"
 import { Health } from "../gameplay/Health"
 import { Transform } from "../Transform"
 import { Camera } from "./Camera"
@@ -48,13 +49,19 @@ export class RenderDirector {
     protected constructor(
         public readonly drawer: Drawer,
         public readonly deltaTime: number,
-        public readonly camera: Camera
+        public readonly camera: Camera,
+        public readonly game: Game
     ) {
         try {
             RenderDirector.current = this
 
             this.drawFloor()
             this.drawSprites()
+
+            for (const postProcess of this.game.postProcesses) {
+                postProcess.render(this.drawer)
+            }
+
             this.drawHealthBars()
 
         } finally {
@@ -64,7 +71,7 @@ export class RenderDirector {
 
     static current: null | RenderDirector = null
 
-    public static render(drawer: Drawer, deltaTime: number, camera: Camera) {
-        new RenderDirector(drawer, deltaTime, camera)
+    public static render(drawer: Drawer, deltaTime: number, camera: Camera, game: Game) {
+        new RenderDirector(drawer, deltaTime, camera, game)
     }
 }

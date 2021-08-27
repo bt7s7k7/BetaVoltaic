@@ -2,11 +2,13 @@ import { Drawer } from "../../drawer/Drawer"
 import { Point } from "../../drawer/Point"
 import { Rect } from "../../drawer/Rect"
 import { Component } from "../../entitySystem/Component"
+import { Game } from "../Game"
 import { Transform } from "../Transform"
 import { RenderDirector } from "./RenderDirector"
 
 export class Camera extends Component {
     public readonly transform = Component.ref(Transform)
+    public readonly game = this.system.findComponent(Game)
 
     protected lastSize = new Rect()
     protected lastCenter = Point.zero
@@ -29,8 +31,7 @@ export class Camera extends Component {
     public draw(drawer: Drawer, deltaTime: number) {
         this.lastSize = drawer.size
         this.lastCenter = this.lastSize.center()
-        RenderDirector.render(drawer, deltaTime, this)
-
+        RenderDirector.render(drawer, deltaTime, this, this.game)
     }
 
     public init() {

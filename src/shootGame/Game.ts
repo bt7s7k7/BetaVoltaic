@@ -13,8 +13,10 @@ import { PhysicsSystem } from "./physics/PhysicsSystem"
 import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
 import { PlayerPrefab } from "./player/PlayerPrefab"
+import { BloomEffect } from "./rendering/BloomEffect"
 import { Camera } from "./rendering/Camera"
 import { PlayerCameraPrefab } from "./rendering/PlayerCameraPrefab"
+import { PostProcess } from "./rendering/PostProcess"
 import { Transform } from "./Transform"
 
 export class Game extends Component {
@@ -29,6 +31,9 @@ export class Game extends Component {
     public frameTime = 0
 
     public readonly onDeath = new EventEmitter()
+    public readonly postProcesses: PostProcess[] = [
+        new BloomEffect()
+    ]
 
     protected readonly healthSystem = new HealthSystem(this)
     protected fpsCounter = 0
