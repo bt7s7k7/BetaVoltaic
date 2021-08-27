@@ -4,6 +4,7 @@ import { defineDrawerInputConsumer } from "../drawerInput/DrawerInputConsumer"
 import { DrawerView } from "../drawerInputVue3/DrawerView"
 import { eventDecorator } from "../eventDecorator"
 import { Button } from "../vue3gui/Button"
+import { Aberration } from "./Aberration"
 import { Game } from "./Game"
 import { Settings } from "./Settings"
 
@@ -33,7 +34,8 @@ const TIMER_STYLE = {
 export const GameView = eventDecorator(defineComponent({
     name: "GameView",
     emits: {
-        reset: () => true
+        reset: () => true,
+        exit: () => true
     },
     setup(props, ctx) {
         const debugText = ref("")
@@ -89,14 +91,23 @@ export const GameView = eventDecorator(defineComponent({
                 </div>
 
                 {state.value == "paused" && <div class="absolute-fill ignored flex center p-2 bg-black-transparent">
-                    <h1 class="monospace p-2">Paused</h1>
+                    <h1 class="title monospace p-2">
+                        <Aberration>Paused</Aberration>
+                    </h1>
                 </div>}
 
-                {state.value == "dead" && <div class="absolute-fill flex column center p-2 bg-black-transparent gap-2">
-                    <h1 class="monospace m-0">Neutralized</h1>
-                    <h2 class="monospace m-0">You survived {time.value.toFixed(2)} seconds</h2>
-                    <h2 class="monospace m-0">High score: {Settings.value.highScore} seconds</h2>
-                    <Button onClick={() => ctx.emit("reset")}>Try again</Button>
+                {state.value == "dead" && <div class="absolute-fill flex column center p-2 bg-black-transparent gap-4">
+                    <Aberration large class="monospace title m-0 mb-4">Neutralized</Aberration>
+                    <div class="flex row gap-4">
+                        <Button onClick={() => ctx.emit("reset")} variant="primary">
+                            <Aberration>Try again</Aberration>
+                        </Button>
+                        <Button onClick={() => ctx.emit("exit")}>
+                            <Aberration>Main menu</Aberration>
+                        </Button>
+                    </div>
+                    <Aberration class="monospace m-0 mt-4">You survived {time.value.toFixed(2)} seconds</Aberration>
+                    <Aberration class="monospace m-0">High score: {Settings.value.highScore} seconds</Aberration>
                 </div>}
             </div>
         )

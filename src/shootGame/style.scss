@@ -1,0 +1,108 @@
+body {
+    --aberration-type: lighten;
+    overflow: hidden;
+}
+
+.title {
+    font-size: 5rem;
+}
+
+.aberration {
+    --offset: 1px;
+
+    &.large {
+        --offset: 2px;
+    }
+
+    :nth-child(1) {
+        color: #000000;
+    }
+
+    :nth-child(2) {
+        color: #ff0000;
+        mix-blend-mode: var(--aberration-type);
+        transform: translate(calc(var(--offset) * -1), calc(var(--offset) * -1));
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    :nth-child(3) {
+        color: #00ff00;
+        mix-blend-mode: var(--aberration-type);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    :nth-child(4) {
+        color: #0000ff;
+        mix-blend-mode: var(--aberration-type);
+        transform: translate(var(--offset), var(--offset));
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+}
+
+.as-button {
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    transition: none;
+    font-family: monospace;
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: row;
+
+    &.enabled {
+        background: #005500;
+    }
+
+    &.disabled {
+        background: #550000;
+    }
+    
+    &:hover {
+        background: white;
+        color: black;
+        --aberration-type: multiply;
+
+        &.enabled {
+            background: #00ff00;
+        }
+    
+        &.disabled {
+            background: #ff0000;
+        }
+    }
+}
+
+.as-settings-view {
+    .label {
+        display: flex;
+        flex-direction: row;
+        font-size: 1rem;
+        align-items: center;
+        gap: 4px;
+
+        &::after, &::before {
+            content: "";
+            height: 2px;
+            background-color: white;
+            flex: 0 0 50px;
+        }
+        
+        &::after {
+            flex: 1 1;
+        }
+    }
+
+    .category {
+        font-family: monospace;
+        font-size: 1.5rem;
+        display: grid;
+        grid: auto-flow / 500px 500px;
+        row-gap: 8px;
+    }
+}

@@ -1,16 +1,34 @@
 import { defineComponent } from "vue"
 import { eventDecorator } from "../eventDecorator"
 import { Button } from "../vue3gui/Button"
+import { Aberration } from "./Aberration"
 
 export const MainMenu = eventDecorator(defineComponent({
     name: "MainMenu",
     emits: {
-        start: () => true
+        start: () => true,
+        settings: () => true
     },
     setup(props, ctx) {
         return () => (
-            <div>
-                <Button onClick={() => ctx.emit("start")}>Start</Button>
+            <div class="flex-fill flex row bg-black monospace user-select-none">
+                <div class="flex column p-4 pt-10 gap-10">
+                    <Aberration class="title" large>
+                        BetaVoltaic
+                    </Aberration>
+                    <div class="flex column gap-4">
+                        <Button onClick={() => ctx.emit("start")} clear>
+                            <Aberration>
+                                Start
+                            </Aberration>
+                        </Button>
+                        <Button onClick={() => ctx.emit("settings")} clear>
+                            <Aberration>
+                                Settings
+                            </Aberration>
+                        </Button>
+                    </div>
+                </div>
             </div>
         )
     }

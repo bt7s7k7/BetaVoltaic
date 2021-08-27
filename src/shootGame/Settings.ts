@@ -4,7 +4,14 @@ const LS_KEY = "beta-voltaic:settings"
 
 export namespace Settings {
     export const value = reactive({
-        highScore: "0.00"
+        highScore: "0.00",
+        aberration: true,
+        bloom: true,
+        slowMotion: false,
+        invulnerability: false,
+        fpsMeter: false,
+        forceLandscape: false,
+        touchControls: false,
     })
 
     {

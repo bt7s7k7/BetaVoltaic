@@ -4,7 +4,7 @@ import { router } from "./app/router"
 import { DARK_THEME } from "./vue3gui/themes/dark"
 import { ThemeSwitch } from "./vue3gui/ThemeSwitch"
 
-new ThemeSwitch().registerTheme(DARK_THEME)
+new ThemeSwitch().registerTheme(DARK_THEME).setTheme("dark")
 
 const app = createApp(App)
 
