@@ -1,6 +1,7 @@
-import { defineComponent, ref, Transition } from "vue"
+import { defineComponent, nextTick, ref, Transition, watch } from "vue"
 import { GameView } from "./GameView"
 import { MainMenu } from "./MainMenu"
+import { Settings } from "./Settings"
 import { SettingsView } from "./SettingsView"
 import "./style.scss"
 
@@ -15,6 +16,31 @@ export const Scene = (defineComponent({
             key.value++
             state.value = newState
         }
+
+        const app = document.getElementById("app")!
+
+        function calculateForceLandscape() {
+            const forceLandscape = Settings.value.forceLandscape
+                && window.innerHeight > window.innerWidth
+
+            if (forceLandscape) {
+                app.classList.add("as-force-landscape")
+            } else {
+                app.classList.remove("as-force-landscape")
+            }
+        }
+
+        window.addEventListener("resize", () => {
+            calculateForceLandscape()
+        })
+
+        watch(() => Settings.value.forceLandscape, () => {
+            calculateForceLandscape()
+        })
+
+        nextTick(() => {
+            calculateForceLandscape()
+        })
 
         return () => (
             <Transition name="as-transition-slide-x">

@@ -16,7 +16,7 @@ export const SettingsView = eventDecorator(defineComponent({
                 <div class="flex-fill flex column gap-2 as-settings-view">
                     <div class="label">General</div>
                     <div class="category">
-                        <div>Force landscape</div>
+                        <div onClick={() => Settings.value.forceLandscape = !Settings.value.forceLandscape}>Force landscape</div>
                         <Toggle vModel={Settings.value.forceLandscape} />
                         <div>Touch controls</div>
                         <Toggle vModel={Settings.value.touchControls} />
