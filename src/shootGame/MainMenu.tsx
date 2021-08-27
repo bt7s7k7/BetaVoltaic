@@ -29,6 +29,7 @@ export const MainMenu = eventDecorator(defineComponent({
                         </Button>
                     </div>
                 </div>
+                <img src="/picture.png" class="img-scale-down" />
             </div>
         )
     }

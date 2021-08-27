@@ -1,0 +1,38 @@
+{
+    "$schema": "https://json.schemastore.org/web-manifest.json",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "display": "fullscreen",
+    "scope": "/",
+    "start_url": "/",
+    "name": "BetaVoltaic",
+    "short_name": "BetaVoltaic",
+    "description": "Topdown bullet-hell shooter",
+    "orientation": "landscape",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable monochrome"
+        },
+        {
+            "src": "/icon-256x256.png",
+            "sizes": "256x256",
+            "type": "image/png",
+            "purpose": "any maskable monochrome"
+        },
+        {
+            "src": "/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "any maskable monochrome"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable monochrome"
+        }
+    ]
+}
