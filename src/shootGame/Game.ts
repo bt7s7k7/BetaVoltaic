@@ -13,6 +13,7 @@ import { PhysicsSystem } from "./physics/PhysicsSystem"
 import { CameraFollower } from "./player/CameraFollower"
 import { GameInput } from "./player/GameInput"
 import { PlayerPrefab } from "./player/PlayerPrefab"
+import { AberrationEffect } from "./rendering/AbberationEffect"
 import { BloomEffect } from "./rendering/BloomEffect"
 import { Camera } from "./rendering/Camera"
 import { PlayerCameraPrefab } from "./rendering/PlayerCameraPrefab"
@@ -32,7 +33,8 @@ export class Game extends Component {
 
     public readonly onDeath = new EventEmitter()
     public readonly postProcesses: PostProcess[] = [
-        new BloomEffect()
+        new BloomEffect(),
+        new AberrationEffect()
     ]
 
     protected readonly healthSystem = new HealthSystem(this)
