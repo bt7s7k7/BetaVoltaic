@@ -1,10 +1,11 @@
 import { css } from "@emotion/css"
-import { defineComponent, ref } from "vue"
+import { defineComponent, ref, watch } from "vue"
 import { defineDrawerInputConsumer } from "../drawerInput/DrawerInputConsumer"
 import { DrawerView } from "../drawerInputVue3/DrawerView"
 import { eventDecorator } from "../eventDecorator"
 import { Button } from "../vue3gui/Button"
 import { Game } from "./Game"
+import { Settings } from "./Settings"
 
 const TIMER_STYLE = {
     layout: css({
@@ -63,6 +64,13 @@ export const GameView = eventDecorator(defineComponent({
             })
         })
 
+        watch(state, (state, oldState) => {
+            if (state == "dead" && oldState != "dead") {
+                const score = time.value.toFixed(2)
+                if (+Settings.value.highScore < +score) Settings.value.highScore = score
+            }
+        })
+
         return () => (
             <div class="flex-fill user-select-none">
                 <DrawerView class="absolute-fill" consumer={consumer} />
@@ -86,7 +94,8 @@ export const GameView = eventDecorator(defineComponent({
 
                 {state.value == "dead" && <div class="absolute-fill flex column center p-2 bg-black-transparent gap-2">
                     <h1 class="monospace m-0">Neutralized</h1>
-                    <h2 class="monospace p-2 m-0">You survived {time.value.toFixed(2)} seconds</h2>
+                    <h2 class="monospace m-0">You survived {time.value.toFixed(2)} seconds</h2>
+                    <h2 class="monospace m-0">High score: {Settings.value.highScore} seconds</h2>
                     <Button onClick={() => ctx.emit("reset")}>Try again</Button>
                 </div>}
             </div>
