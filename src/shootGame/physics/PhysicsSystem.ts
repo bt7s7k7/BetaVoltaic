@@ -9,7 +9,8 @@ export class PhysicsSystem {
         enemy: [],
         player: [],
         projectile: [],
-        wall: []
+        wall: [],
+        pickup: []
     }
 
     public update(deltaTime: number) {

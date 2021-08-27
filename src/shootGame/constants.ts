@@ -6,6 +6,9 @@ import { EnforcerController } from "./enemy/EnforcerController"
 import { EnforcerPrefab } from "./enemy/EnforcerPrefab"
 import { RangerController } from "./enemy/RangerController"
 import { RangerPrefab } from "./enemy/RangerPrefab"
+import { Health } from "./gameplay/Health"
+import { HealthPickupPrefab } from "./gameplay/HealthPickupPrefab"
+import { HealthPickupSprite } from "./gameplay/HealthPickupSprite"
 
 export const PLAYER_BULLET_SPEED = 40
 export const PLAYER_BULLET_TIMEOUT = 0.1
@@ -59,5 +62,16 @@ export const ENEMY_SPAWN_OPTIONS: EnemySpawnOptions[] = [
         minTime: 10,
         spawnChance: 0.5,
         trackComponent: EnforcerController
+    },
+    {
+        prefab: HealthPickupPrefab,
+        maxCount: 5,
+        spawnChance: 0.5,
+        trackComponent: HealthPickupSprite,
+        minTime: 0,
+        condition: game => {
+            const health = game.playerEntity.getComponent(Health)
+            return health.health < health.maxHealth
+        }
     }
 ]

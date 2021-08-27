@@ -3,5 +3,6 @@ export enum Layer {
     Player = "player",
     Wall = "wall",
     Enemy = "enemy",
-    Projectile = "projectile"
+    Projectile = "projectile",
+    Pickup = "pickup"
 }

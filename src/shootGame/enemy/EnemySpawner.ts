@@ -12,6 +12,7 @@ export interface EnemySpawnOptions {
     spawnChance: number
     maxCount: number
     trackComponent: ComponentConstructor
+    condition?: (game: Game) => boolean
 }
 
 function getRandomPointInArena() {
@@ -35,6 +36,8 @@ export class EnemySpawner {
                 if (Math.random() >= (spawnOption.spawnChance + this.game.time / 100)) continue
 
                 if (this.game.system.countComponents(spawnOption.trackComponent) >= spawnOption.maxCount) continue
+
+                if (spawnOption.condition && !spawnOption.condition(this.game)) continue
 
                 let position: Point
 

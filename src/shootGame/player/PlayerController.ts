@@ -2,6 +2,7 @@ import { Component } from "../../entitySystem/Component"
 import { PLAYER_BULLET_SPEED, PLAYER_BULLET_TIMEOUT, PLAYER_COLOR, PLAYER_DAMAGE, PLAYER_SPEED } from "../constants"
 import { Game } from "../Game"
 import { BulletPrefab } from "../gameplay/BulletPrefab"
+import { PickupComponent } from "../gameplay/PickupComponent"
 import { Collider } from "../physics/Collider"
 import { DynamicComponent } from "../physics/DynamicComponent"
 import { Layer } from "../physics/Layer"
@@ -30,6 +31,11 @@ export class PlayerController extends DynamicComponent {
             }))
 
             this.bulletTimeout.restart()
+        }
+
+        for (const pickup of this.collider.testCollision(Layer.Pickup)) {
+            pickup.entity.getComponent(PickupComponent).pickup(this)
+            pickup.entity.dispose()
         }
     }
 }
