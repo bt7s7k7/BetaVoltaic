@@ -25,13 +25,23 @@ export const BulletPrefab = ({ targetLayer, pos, dir, color, damage, speed }: Bu
     })
     .addComponent(Transform, { pos })
     .addComponent(class extends DrawableComponent {
+        public angle = dir.toAngle()
+
         public drawSprite(drawer: Drawer) {
             const center = this.renderer.worldToScreen(this.transform.pos)
 
-            drawer.setStyle(color)
+            drawer
+                .save()
+                .translate(center)
+                .rotate(-this.angle)
+                .scale(new Point(0.75, 1.25))
+
+                .setStyle(color)
                 .beginPath()
-                .arc(center, 0.1 * this.renderer.zoom)
+                .arc(Point.zero, 0.1 * this.renderer.zoom)
                 .fill()
+
+                .restore()
         }
     })
     .build()
