@@ -14,7 +14,11 @@ export class Bullet extends DynamicComponent {
     protected toDelete = false
 
     public update() {
-        if (this.toDelete) this.entity.dispose()
+        if (this.toDelete) {
+            this.entity.dispose()
+            return
+        }
+
         const hits = this.collider.testCollision(this.targetLayer)
 
         if (hits.length > 0) {
