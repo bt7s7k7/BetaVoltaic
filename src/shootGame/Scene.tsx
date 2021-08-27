@@ -15,7 +15,8 @@ export const Scene = (defineComponent({
         }
 
         return () => (
-            state.value == "menu" ? <MainMenu key={key.value} onStart={() => setState("game")} /> : <GameView key={key.value} />
+            state.value == "menu" ? <MainMenu key={key.value} onStart={() => setState("game")} />
+                : <GameView onReset={() => setState("game")} key={key.value} />
         )
     }
 }))

@@ -32,6 +32,8 @@ export class Game extends Component {
     public time = 0
     public fps = 0
     public frameTime = 0
+    public paused = false
+    public dead = false
 
     public readonly onDeath = new EventEmitter()
     public readonly postProcesses: PostProcess[] = [
@@ -54,19 +56,23 @@ export class Game extends Component {
     }
 
     public update(drawer: Drawer, deltaTime: number) {
+        if (this.paused) deltaTime = 0
+
         const start = performance.now()
         if (deltaTime > 0.5) deltaTime = 0.5
         this.time += deltaTime
-        this.input.update()
+        if (!this.paused) {
+            this.input.update()
 
-        for (const dynamic of this.system.iterateComponents(DynamicComponent)) {
-            dynamic.update(deltaTime)
+            for (const dynamic of this.system.iterateComponents(DynamicComponent)) {
+                dynamic.update(deltaTime)
+            }
+
+            this.healthSystem.update(deltaTime)
+            this.physics.update(deltaTime)
+
+            this.enemySpawner.update(deltaTime)
         }
-
-        this.healthSystem.update(deltaTime)
-        this.physics.update(deltaTime)
-
-        this.enemySpawner.update(deltaTime)
 
         drawer.setNativeSize()
         drawer.setStyle(Color.black).fillRect()
@@ -95,5 +101,14 @@ export class Game extends Component {
         this.cameraEntity.getComponent(CameraFollower).target = this.playerEntity.getComponent(Transform)
 
         this.playerEntity.getComponent(Transform).move(new Point(5, 5))
+
+        this.onDeath.add(null, () => {
+            this.dead = true
+            this.paused = true
+        })
+
+        this.drawerInput.keyboard.key("Escape").onDown.add(this, () => {
+            if (!this.dead) this.paused = !this.paused
+        })
     }
 }
