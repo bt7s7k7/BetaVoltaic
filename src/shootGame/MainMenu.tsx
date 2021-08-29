@@ -41,6 +41,10 @@ export const MainMenu = eventDecorator(defineComponent({
                     </div>
                 </div>
                 <img src="/picture.png" class="img-scale-down" />
+
+                <div class="absolute right-0 bottom-0 p-2">
+                    Game by Branislav Trstenský
+                </div>
             </div>
         )
     }
