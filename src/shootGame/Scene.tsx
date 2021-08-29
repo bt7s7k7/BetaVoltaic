@@ -3,7 +3,6 @@ import { GameView } from "./GameView"
 import { MainMenu } from "./MainMenu"
 import { Settings } from "./Settings"
 import { SettingsView } from "./SettingsView"
-import "./style.scss"
 
 type State = "menu" | "game" | "settings"
 export const Scene = (defineComponent({
