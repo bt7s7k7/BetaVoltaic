@@ -7,3 +7,5 @@ project.prefix("src").res("shootGame",
     github("bt7s7k7/Drawer").res("drawerInputVue3"),
     github("bt7s7k7/EntitySystem").res("entitySystem")
 )
+
+project.use(github("bt7s7k7/BundleLib").script("build-sw"))

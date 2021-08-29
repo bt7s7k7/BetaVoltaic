@@ -18,6 +18,7 @@ module.exports = {
     rules: {
         "no-console": "warn",
         "no-debugger": "warn",
+        "no-undef": "off",
         "prefer-const": "off",
         "semi": ["warn", "never"],
         "prefer-rest-params": "off",

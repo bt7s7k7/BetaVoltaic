@@ -1,5 +1,6 @@
 import { defineComponent } from "vue"
 import { eventDecorator } from "../eventDecorator"
+import { swState } from "../swState"
 import { Button } from "../vue3gui/Button"
 import { Aberration } from "./Aberration"
 
@@ -27,6 +28,11 @@ export const MainMenu = eventDecorator(defineComponent({
                                 Settings
                             </Aberration>
                         </Button>
+                        {swState.value == "update" && <Button onClick={() => location.reload()} clear>
+                            <Aberration>
+                                Update Available
+                            </Aberration>
+                        </Button>}
                     </div>
                 </div>
                 <img src="/picture.png" class="img-scale-down" />

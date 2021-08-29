@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "concurrently --raw --kill-others \"vite\" \"tsc --noEmit --watch --incremental --preserveWatchOutput\"",
-        "build": "ucpem link resolve && tsc --noEmit --incremental && vite build && ucpem link unresolve",
+        "build": "ucpem link resolve && tsc --noEmit --incremental && vite build && ucpem link unresolve && ucpem run BundleLib+build-sw",
         "serve": "vite preview",
         "get-ucpem": "curl -L https://github.com/bt7s7k7/UCPeM/releases/latest/download/ucpem.js -o node_modules/.bin/ucpem",
         "lint": "eslint ."
