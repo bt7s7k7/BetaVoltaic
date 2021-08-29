@@ -1,6 +1,6 @@
 import { defineComponent } from "vue"
 import { eventDecorator } from "../eventDecorator"
-import { swState } from "../swState"
+import { installPrompt, swState } from "../pwa"
 import { Button } from "../vue3gui/Button"
 import { Aberration } from "./Aberration"
 
@@ -31,6 +31,11 @@ export const MainMenu = eventDecorator(defineComponent({
                         {swState.value == "update" && <Button onClick={() => location.reload()} clear>
                             <Aberration>
                                 Update Available
+                            </Aberration>
+                        </Button>}
+                        {installPrompt.value != null && <Button onClick={() => installPrompt.value?.()} clear>
+                            <Aberration>
+                                Install
                             </Aberration>
                         </Button>}
                     </div>
