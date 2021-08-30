@@ -20,6 +20,7 @@ import { Camera } from "./rendering/Camera"
 import { PlayerCameraPrefab } from "./rendering/PlayerCameraPrefab"
 import { PostProcess } from "./rendering/PostProcess"
 import { Settings } from "./Settings"
+import { TouchControls } from "./TouchControls"
 import { Transform } from "./Transform"
 
 export class Game extends Component {
@@ -29,6 +30,7 @@ export class Game extends Component {
     public readonly input = new GameInput(this)
     public readonly physics = new PhysicsSystem(this)
     public readonly enemySpawner = new EnemySpawner(this)
+    public readonly touchControls = new TouchControls(this)
 
     public time = 0
     public fps = 0
@@ -80,6 +82,7 @@ export class Game extends Component {
         drawer.setStyle(Color.black).fillRect()
 
         this.cameraEntity.getComponent(Camera).draw(drawer, deltaTime)
+        if (Settings.value.touchControls) this.touchControls.draw()
         const end = performance.now()
         this.fpsCounter++
         this.frameTime = (end - start)
@@ -87,6 +90,10 @@ export class Game extends Component {
 
     public getDebugText() {
         return `FPS: ${this.fps} (${this.frameTime.toFixed(1)}ms)`
+    }
+
+    public pause() {
+        if (!this.dead) this.paused = !this.paused
     }
 
     constructor(
@@ -110,7 +117,7 @@ export class Game extends Component {
         })
 
         this.drawerInput.keyboard.key("Escape").onDown.add(this, () => {
-            if (!this.dead) this.paused = !this.paused
+            this.pause()
         })
     }
 }

@@ -20,6 +20,10 @@ export const SettingsView = eventDecorator(defineComponent({
                         <Toggle vModel={Settings.value.forceLandscape} />
                         <div>Touch controls</div>
                         <Toggle vModel={Settings.value.touchControls} />
+                        {Settings.value.touchControls && <>
+                            <div>Center fire joystick</div>
+                            <Toggle vModel={Settings.value.fireCenter} />
+                        </>}
                     </div>
                     <div class="label">Graphics</div>
                     <div class="category">
@@ -27,6 +31,8 @@ export const SettingsView = eventDecorator(defineComponent({
                         <Toggle vModel={Settings.value.aberration} />
                         <div>Bloom</div>
                         <Toggle vModel={Settings.value.bloom} />
+                        <div>Small screen mode</div>
+                        <Toggle vModel={Settings.value.smallScreen} />
                     </div>
                     <div class="label">Other</div>
                     <div class="category">

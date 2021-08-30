@@ -1,10 +1,15 @@
 import { css } from "@emotion/css"
+import { mdiPause } from "@mdi/js"
 import { defineComponent, ref, watch } from "vue"
+import { Matrix } from "../drawer/Matrix"
 import { defineDrawerInputConsumer } from "../drawerInput/DrawerInputConsumer"
 import { DrawerView } from "../drawerInputVue3/DrawerView"
 import { eventDecorator } from "../eventDecorator"
+import { EventEmitter } from "../eventLib/EventEmitter"
 import { Button } from "../vue3gui/Button"
+import { Icon } from "../vue3gui/Icon"
 import { Aberration } from "./Aberration"
+import { isLandscape } from "./forceLandscape"
 import { Game } from "./Game"
 import { Settings } from "./Settings"
 
@@ -41,10 +46,19 @@ export const GameView = eventDecorator(defineComponent({
         const debugText = ref("")
         const time = ref(0)
         const state = ref<"normal" | "paused" | "dead">()
+        const onPause = new EventEmitter()
 
         const consumer = defineDrawerInputConsumer((self, drawerInput) => {
             const game = new Game(drawerInput)
             self.guard(game)
+
+            self.guard(watch(isLandscape, isLandscape => {
+                drawerInput.transformTouchPos =
+                    isLandscape ? (point, size) => Matrix.identity.rotate(Math.PI / 2).translate(0, size.y).transform(point)
+                        : null
+            }, { immediate: true }))
+
+            onPause.add(self, () => game.pause())
 
             function update(deltaTime: number) {
                 if (!game.paused) game.update(drawerInput.drawer, deltaTime / 1000)
@@ -112,6 +126,8 @@ export const GameView = eventDecorator(defineComponent({
                     <Aberration class="monospace m-0 mt-4">You survived {time.value.toFixed(2)} seconds</Aberration>
                     <Aberration class="monospace m-0">High score: {Settings.value.highScore} seconds</Aberration>
                 </div>}
+
+                {Settings.value.touchControls && <Button class="absolute left-0 top-0" onClick={() => onPause.emit()}><Icon icon={mdiPause} /></Button>}
             </div>
         )
     }

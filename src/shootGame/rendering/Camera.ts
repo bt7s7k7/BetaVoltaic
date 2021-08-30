@@ -3,6 +3,7 @@ import { Point } from "../../drawer/Point"
 import { Rect } from "../../drawer/Rect"
 import { Component } from "../../entitySystem/Component"
 import { Game } from "../Game"
+import { Settings } from "../Settings"
 import { Transform } from "../Transform"
 import { RenderDirector } from "./RenderDirector"
 
@@ -13,7 +14,7 @@ export class Camera extends Component {
     protected lastSize = new Rect()
     protected lastCenter = Point.zero
 
-    public zoom = 40
+    public zoom = Settings.value.smallScreen ? 30 : 40
 
     public worldToScreen(point: Point) {
         return point.add(this.transform.pos.mul(-1)).mul(this.zoom).add(this.lastCenter)

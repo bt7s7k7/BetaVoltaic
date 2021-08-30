@@ -35,7 +35,7 @@ export class PlayerSprite extends PointerSprite {
             drawer.restore()
         }
 
-        this.angle = this.transform.pos.add(this.game.input.mousePosWorld.mul(-1)).normalize().toAngle()
+        this.angle = this.player.input.dir.toAngle() + Math.PI
         super.drawSprite(drawer)
     }
 }

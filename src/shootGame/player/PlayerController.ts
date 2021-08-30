@@ -23,7 +23,7 @@ export class PlayerController extends DynamicComponent {
         this.bulletTimeout.update(deltaTime)
 
         if (this.input.fire && this.bulletTimeout.ready()) {
-            const dir = this.input.mousePosWorld.add(this.transform.pos.mul(-1)).normalize()
+            const dir = this.input.dir
             this.system.spawn(BulletPrefab({
                 targetLayer: Layer.Enemy,
                 pos: this.transform.pos, dir,

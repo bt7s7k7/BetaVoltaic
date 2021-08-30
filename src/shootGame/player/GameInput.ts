@@ -7,6 +7,7 @@ export class GameInput {
     public mousePos = Point.zero
     public mousePosWorld = Point.zero
     public fire = false
+    public dir = Point.zero
 
     public update() {
         let mX = 0
@@ -17,7 +18,7 @@ export class GameInput {
         if (this.game.drawerInput.keyboard.key("KeyA").down) mX -= 1
         if (this.game.drawerInput.keyboard.key("KeyD").down) mX += 1
 
-        this.move = new Point(mX, mY).normalize()
+        this.move = new Point(mX, mY).add(this.game.touchControls.move.value).clampSize(1)
 
         const camera = this.getCamera()
         const mousePos = this.game.drawerInput.mouse.pos
@@ -25,7 +26,14 @@ export class GameInput {
             this.mousePos = mousePos
             this.mousePosWorld = camera.screenToWorld(this.mousePos)
         }
-        this.fire = this.game.drawerInput.mouse.left.down
+
+        if (!this.game.touchControls.fire.value.isZero()) {
+            this.fire = true
+            this.dir = this.game.touchControls.fire.value.normalize()
+        } else {
+            this.fire = this.game.drawerInput.mouse.left.down
+            if (!this.mousePos.isZero()) this.dir = this.mousePosWorld.add(this.game.player.transform.pos.mul(-1)).normalize()
+        }
     }
 
     protected getCamera() {

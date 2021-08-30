@@ -12,6 +12,8 @@ export namespace Settings {
         fpsMeter: false,
         forceLandscape: false,
         touchControls: false,
+        fireCenter: false,
+        smallScreen: false,
     })
 
     {

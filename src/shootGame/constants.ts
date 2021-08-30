@@ -42,6 +42,12 @@ export const ENFORCER_HEALTH = 1
 export const ENFORCER_BULLET_TIMEOUT = 0.4
 export const ENFORCER_BULLET_SPEED = 10
 export const ENFORCER_DAMAGE = 0.5
+export const TOUCH_JOY_PADDING = 50
+export const TOUCH_JOY_SIZE = 100
+export const TOUCH_CENTER_JOY_SIZE = 200
+export const TOUCH_JOY_LINE_WIDTH = 2
+export const TOUCH_JOY_COLOR = Color.white
+export const TOUCH_JOY_DOT_SIZE = 20
 
 export const ENEMY_SPAWN_OPTIONS: EnemySpawnOptions[] = [
     {
