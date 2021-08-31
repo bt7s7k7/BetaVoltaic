@@ -9,6 +9,7 @@ import { RangerPrefab } from "./enemy/RangerPrefab"
 import { Health } from "./gameplay/Health"
 import { HealthPickupPrefab } from "./gameplay/HealthPickupPrefab"
 import { HealthPickupSprite } from "./gameplay/HealthPickupSprite"
+import { ShieldEffect } from "./gameplay/ShieldEffect"
 import { ShieldPickupPrefab } from "./gameplay/ShieldPickupPrefab"
 import { ShieldPickupSprite } from "./gameplay/ShieldPickupSprite"
 
@@ -87,6 +88,9 @@ export const ENEMY_SPAWN_OPTIONS: EnemySpawnOptions[] = [
         maxCount: 2,
         spawnChance: 0.5,
         minTime: 5,
-        trackComponent: ShieldPickupSprite
+        trackComponent: ShieldPickupSprite,
+        condition: game => {
+            return !game.player.effects.has(ShieldEffect)
+        }
     }
 ]
